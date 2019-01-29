@@ -8,12 +8,10 @@ import {
   FETCH_PRODUCT_SAVE_EDIT_SUCCESS,      // save product request returned with success
   FETCH_PRODUCT_SAVE_EDIT_ERROR,        // save product request returned with error
   DELETE_PRODUCT,                       // delete a single product request
-  FETCH_DELETE_PRODUCT_SUCCESS,         // delete product request returned with success
   FETCH_DELETE_PRODUCT_ERROR,           // delete product request returned with error
   updateProducts,                       // we got all products then we add into store
   getProductById,                       // we got the selected item and we put into store
   resetProduct,                         // reset product
-  getProducts
 } from "../Actions/products";
 import { apiRequest } from "../Actions/api";
 import {
@@ -89,22 +87,13 @@ export const deleteProduct = ({ dispatch }) => next => action => {
         `/products/${action.payload}`,
         "DELETE",
         null,
-        FETCH_DELETE_PRODUCT_SUCCESS,
+        GET_PRODUCTS,
         FETCH_DELETE_PRODUCT_ERROR
       )
     );
     dispatch(showLoader());
   }
 };
-
-// update a single product if request was success
-export const processDeleteProduct = ({dispatch}) => next => action => {
-  next(action);
-  if(action.type === FETCH_DELETE_PRODUCT_SUCCESS) {
-      dispatch(getProducts());
-      dispatch(hideLoader());
-  }
-}
 
 // Save edited product request
 export const saveProductById = ({ dispatch, getState }) => next => action => {

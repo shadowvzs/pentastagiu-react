@@ -8,7 +8,6 @@ export const FETCH_PRODUCT_SUCCESS = '[products] Get single was successful';
 export const FETCH_PRODUCT_ERROR = '[products] Get single encountered an error';
 
 export const DELETE_PRODUCT = '[products] Delete product';
-export const FETCH_DELETE_PRODUCT_SUCCESS = '[products] Delete single was successful';
 export const FETCH_DELETE_PRODUCT_ERROR = '[products] Delete single encountered an error';
 
 export const SAVE_EDIT_PRODUCT = '[product] Save the edited product';
