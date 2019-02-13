@@ -3,9 +3,19 @@ import Header from './components/header/header';
 import Content from './components/content/content';
 import EditCard from './components/editCard/editCard';
 import AddCard from './components/addCard/';
-import './App.css';
 import { connect } from "react-redux";
 import { getProducts, getProduct, deleteProduct } from './Redux/Actions/products';
+import { withStyles } from '@material-ui/core';
+
+const styles = {
+    addCard: {
+        marginTop: '100px',
+    }
+}
+
+const AddCardButton = props => (<button onClick={props.toggleAddCardModal} className={props.classes.addCard}>Add Card</button>);
+const StyledAddCardButton = withStyles(styles)(AddCardButton);
+
 
 class App extends PureComponent {
   constructor(props){
@@ -46,12 +56,14 @@ class App extends PureComponent {
   // show edit card modal if in redux store (ui.productEdit) is true
   // show loader spinner
   // else show content with all product card
+ 
   render() {
+
     console.log('app props', this.props, this.state);
     return (
       <div className="App">
         <Header />
-        <button onClick={this.toggleAddCardModal} className="btn-add-card">Add Card</button> 
+        <StyledAddCardButton toggleAddCardModal={this.toggleAddCardModal} /> 
         {
           this.state.openAddCard ? <AddCard onClick={this.toggleAddCardModal} /> : null
         }

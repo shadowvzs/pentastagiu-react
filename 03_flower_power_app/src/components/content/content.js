@@ -1,16 +1,23 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Card from '../card/card';
-import './content.css';
+import CardProduct from '../cardProduct/cardProduct';
+import { withStyles } from '@material-ui/core';
+
+const styles = {
+    content: {
+        paddingTop: '50px',
+        textAlign: 'center'
+   }
+}
 
 class Content extends Component {
 
     render() {
         return(
-            <div className="content">
+            <div className={this.props.classes.content}>
                 {this.props.products.map(function(item){
                     return (
-                        <Card
+                        <CardProduct
                             key={item.id}
                             {...item}
                             deleteProduct={this.props.deleteProduct}
@@ -22,6 +29,7 @@ class Content extends Component {
         )
     }
 }
+
 Content.propTypes = {
     name: PropTypes.string.isRequired,
     handleClick: PropTypes.func,
@@ -29,4 +37,5 @@ Content.propTypes = {
     title: PropTypes.string,
     products: PropTypes.any,
 }
-export default Content;
+
+export default withStyles(styles)(Content);

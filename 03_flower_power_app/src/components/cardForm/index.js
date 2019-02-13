@@ -1,7 +1,25 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import { withStyles, Button } from '@material-ui/core';
 
-export default class CardForm extends React.PureComponent {
+const styles = {
+    table: {
+        '& tr:last-child td': {
+            textAlign: 'center'
+        },
+    },
+    label: {
+        flex: '0.5'
+    },
+    input: {
+        flex: '0.5'
+    },
+    button: {
+        margin: '0 10px'
+    }
+}
+
+class CardForm extends React.PureComponent {
     
     constructor (props) {
         super(props);
@@ -31,16 +49,17 @@ export default class CardForm extends React.PureComponent {
             fields = Object.keys(this.fieldData);;
         
         return (
-            <table className="card-form-table">
+            <table className={props.classes.table}>
                 <tbody>
                 {
                     fields.map(field => {
                         return (
                             <tr key={field}>
                                 <td>
-                                    <label>{field}: </label>
+                                    <label className={props.classes.label}>{field}: </label>
                                 </td><td>
                                     <input 
+                                        className={props.classes.input}
                                         value={this.state[field]}
                                         name={field}
                                         type="text"
@@ -54,8 +73,21 @@ export default class CardForm extends React.PureComponent {
                 }
                 <tr>
                     <td colSpan="2">
-                        <button onClick={this.onSave}>Save</button>
-                        <button onClick={props.onClose}>Cancel</button>
+                        <Button 
+                            className={this.props.classes.button}
+                            size="small" 
+                            variant="contained" 
+                            color="primary"
+                            onClick={this.onSave}
+                        >Save</Button>
+                        
+                        <Button 
+                            className={this.props.classes.button}
+                            size="small" 
+                            variant="contained" 
+                            color="secondary"
+                            onClick={this.props.onClose}
+                        >Cancel</Button>
                     </td>
                 </tr>
                 </tbody>
@@ -63,6 +95,9 @@ export default class CardForm extends React.PureComponent {
         )
     }
 }
+
+export default withStyles(styles)(CardForm);
+
 
 CardForm.propTypes = {
     defaultData: PropTypes.object,
