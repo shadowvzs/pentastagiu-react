@@ -18,10 +18,10 @@ class Content extends Component {
                 {this.props.products.map(function(item){
                     return (
                         <CardProduct
+                            history={this.props.history}
                             key={item.id}
                             {...item}
                             deleteProduct={this.props.deleteProduct}
-                            handleClick={this.props.handleClick}
                         />
                     )
                 }, this)}
@@ -31,7 +31,6 @@ class Content extends Component {
 }
 
 Content.propTypes = {
-    name: PropTypes.string.isRequired,
     handleClick: PropTypes.func,
     handleChangeTitle: PropTypes.func,
     title: PropTypes.string,

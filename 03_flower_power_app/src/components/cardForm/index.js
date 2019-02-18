@@ -7,6 +7,9 @@ const styles = {
         '& tr:last-child td': {
             textAlign: 'center'
         },
+        '& td': {
+            padding: '5px 20px'
+        }
     },
     label: {
         flex: '0.5'
@@ -41,7 +44,7 @@ class CardForm extends React.PureComponent {
 
     onSave() {
         this.props.onSave(this.state);
-        this.props.onClose();
+        this.props.history.push('/');
     }
 
     render() {
@@ -86,7 +89,7 @@ class CardForm extends React.PureComponent {
                             size="small" 
                             variant="contained" 
                             color="secondary"
-                            onClick={this.props.onClose}
+                            onClick={() => this.props.history.push('/')}
                         >Cancel</Button>
                     </td>
                 </tr>

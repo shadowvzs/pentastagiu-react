@@ -1,9 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { saveProductEdit } from '../../Redux/Actions/products';
-import { hideProductEdit } from '../../Redux/Actions/ui';
-import CardForm from '../cardForm/';
 import { connect } from "react-redux";
+import { saveProductEdit } from '../../Redux/Actions/products';
+import CardForm from '../cardForm/';
 import { withStyles } from '@material-ui/core';
 
 const styles = {
@@ -23,32 +21,34 @@ const styles = {
   }
 }
 
-function EditCard (props) {   
-  const defaultData = props.product;
-  return (
-    <div className={props.classes.cardModal}>
-      <CardForm
-        onSave={props._saveProductEdit}
-        onClose={props._hideProductEdit}
-        defaultData={defaultData}
-      />
-    </div>
-  );
+class EditCard extends React.PureComponent {
+
+  render() {
+    const props = this.props;
+    const id = this.props.match.params.productId;
+    const product = props.products.find(e => +e.id === +id);
+    if (!product) { return null; } 
+    return (
+      <div className={props.classes.cardModal}>
+        <CardForm
+          {...props}
+          classes={null}
+          onSave={props._saveProductEdit}
+          defaultData={product}
+        />
+      </div>
+    );
+  }
 }
 
-
-EditCard.propTypes = {
-  onClick: PropTypes.func,
-  product: PropTypes.object,
-};
-
+// put redux store (ui/products) into props
 const mapStateToProps = (state) => ({
-  product: state.products.product
+  products: state.products.products
 });
+
 
 const mapDispatchToProps = (dispatch) => ({
   _saveProductEdit: (product) => dispatch(saveProductEdit(product)),
-  _hideProductEdit: () => dispatch(hideProductEdit())
 });
 
 const StyledEditCard = withStyles(styles)(EditCard);

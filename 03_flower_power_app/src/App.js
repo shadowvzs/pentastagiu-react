@@ -4,8 +4,9 @@ import Content from './components/content/content';
 import EditCard from './components/editCard/editCard';
 import AddCard from './components/addCard/';
 import { connect } from "react-redux";
-import { getProducts, getProduct, deleteProduct } from './Redux/Actions/products';
+import { getProducts, deleteProduct } from './Redux/Actions/products';
 import { withStyles } from '@material-ui/core';
+import { Route, Switch } from 'react-router-dom';
 
 const styles = {
     addCard: {
@@ -13,22 +14,25 @@ const styles = {
     }
 }
 
-const AddCardButton = props => (<button onClick={props.toggleAddCardModal} className={props.classes.addCard}>Add Card</button>);
+const AddCardButton = props => (
+    <button 
+      onClick={() => props.history.push('/add-product')} 
+      className={props.classes.addCard}
+    > 
+      Add Card 
+    </button>
+  );
 const StyledAddCardButton = withStyles(styles)(AddCardButton);
 
+
+const NotFound = (props) => (
+  <h2> Not found </h2>
+);
 
 class App extends PureComponent {
   constructor(props){
     super(props);
-    this.toggleAddCardModal = this.toggleAddCardModal.bind(this);
-    this.toggleEditCardModal = this.toggleEditCardModal.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
-    this.state = {
-      name: 'Bogdan',
-      title: 'Super Bogdan',
-      openAddCard: false,
-      dataById: {}
-    }
   }
 
   // load all products from backend
@@ -41,46 +45,29 @@ class App extends PureComponent {
     this.props._deleteProduct(id);
   }
 
-  // toggle add card modal - local state here
-  toggleAddCardModal() {
-    const state = this.state.openAddCard;
-    this.setState({openAddCard: !state})
-  }
-
-  // toggle the edit modal - state in redux
-  toggleEditCardModal(id = null) {
-    id && this.props._getProduct(id);
-  }
-
-  // show add card modal is internal state boolean (openAddCard) is true
-  // show edit card modal if in redux store (ui.productEdit) is true
-  // show loader spinner
-  // else show content with all product card
- 
+  //shouldComponentUpdate(nextProps) {
+  //  return nextProps.product !== this.props.product;
+  //}
+  
   render() {
-
-    console.log('app props', this.props, this.state);
+    console.log('app render');
     return (
       <div className="App">
         <Header />
-        <StyledAddCardButton toggleAddCardModal={this.toggleAddCardModal} /> 
-        {
-          this.state.openAddCard ? <AddCard onClick={this.toggleAddCardModal} /> : null
-        }
-        {
-          this.props.ui.productEdit
-            ? <EditCard onClick={this.toggleEditCardModal} />
-            : this.props.ui.showSpinner 
-              ? <div className="loading-spinner"><div></div><div></div><div></div><div></div></div>
-            : <Content
-                name={this.state.name}
-                handleClick={this.toggleEditCardModal}
-                products={this.props.products}
-                title={this.state.title}
-                deleteProduct={this.deleteProduct}
-              />
-        }
-      </div>
+        <StyledAddCardButton {...this.props} />
+        <Switch>
+          <Route exact path="/add-product" component={ props => (<AddCard {...props} />) } />
+          <Route exact path="/product/:productId" component={ props => (<EditCard {...props} />) } />
+          <Route exact path="/" component={ props => (
+            <Content
+              {...props}
+              products={this.props.products}
+              deleteProduct={this.deleteProduct}
+            />)}
+          />
+          <Route path="*" component={() => (<NotFound />)} />
+        </Switch>
+       </div>
     );
   }
 }
@@ -94,7 +81,6 @@ const mapStateToProps = (state) => ({
 // put redux actions into props
 const mapDispatchToProps = (dispatch) => ({
     _getAllProducts: () => dispatch(getProducts()),
-    _getProduct: (id) => dispatch(getProduct(id)),
     _deleteProduct: (id) => dispatch(deleteProduct(id)),
 });
 

@@ -24,19 +24,19 @@ const styles = {
 
 function AddCard(props) {
 
-    // i readed this and decided near local state
-    // why? not persistent, don't have any global impacat
-
     const defaultData = {
         name: '',
         description: '',
         unitPrice: '',
         photoUrl: ''
     };    
+    
 
     return (
         <div className={props.classes.cardModal}>
             <CardForm
+                {...props}
+                classes={null}
                 onSave={props._saveProductAdd}
                 onClose={props.onClick}
                 defaultData={defaultData}
@@ -57,7 +57,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 const StyledComponent = withStyles(styles)(AddCard);
 
-export default connect(
-    null,
-    mapDispatchToProps
-)(StyledComponent);
+export default connect(null, mapDispatchToProps)(StyledComponent);

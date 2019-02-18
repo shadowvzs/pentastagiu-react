@@ -62,7 +62,7 @@ class CardProduct extends React.PureComponent {
                         size="small" 
                         variant="contained" 
                         color="primary" 
-                        onClick={() => props.handleClick(id)}
+                        onClick={() =>  this.props.history.push('/product/'+id)}
                     >Edit</Button>
                     
                     <Button 
