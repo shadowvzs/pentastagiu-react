@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { saveProductAdd } from '../../Redux/Actions/products';
 import { connect } from "react-redux";
 import CardForm from '../cardForm/';
@@ -45,11 +44,6 @@ function AddCard(props) {
     );
  
 }
-
-AddCard.propTypes = {
-    onClick: PropTypes.func,
-    _saveProductAdd: PropTypes.func,
-};
 
 const mapDispatchToProps = (dispatch) => ({
     _saveProductAdd: (product) => dispatch(saveProductAdd(product)),

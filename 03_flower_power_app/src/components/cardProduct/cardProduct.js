@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {PureComponent} from 'react';
 
 import {
     Button, Card, CardActions, CardHeader, CardMedia, CardContent, withStyles
@@ -30,10 +29,10 @@ const styles = {
     }
 }
 
-class CardProduct extends React.PureComponent {
+class CardProduct extends PureComponent {
     render() {
         const props = this.props;
-        console.log('render Card', props);
+        console.log('render Card');
         const id = this.props.id;
         return (
             <Card className={props.classes.contentCard}>
@@ -76,12 +75,5 @@ class CardProduct extends React.PureComponent {
           )
     }
 }
-CardProduct.propTypes = {
-    name: PropTypes.string,
-    photoUrl: PropTypes.string,
-    description: PropTypes.string,
-    //unitPrice: PropTypes.number,
-    handleClick: PropTypes.func,
-    deleteProduct: PropTypes.func,
-}
+
 export default withStyles(styles)(CardProduct);

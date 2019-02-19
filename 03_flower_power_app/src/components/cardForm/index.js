@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from "prop-types";
 import { withStyles, Button } from '@material-ui/core';
 
 const styles = {
@@ -100,12 +99,3 @@ class CardForm extends React.PureComponent {
 }
 
 export default withStyles(styles)(CardForm);
-
-
-CardForm.propTypes = {
-    defaultData: PropTypes.object,
-    fields: PropTypes.array,
-    onSave: PropTypes.func,
-    onClose: PropTypes.func,
-};
-  
