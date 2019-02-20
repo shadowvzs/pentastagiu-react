@@ -21,16 +21,26 @@ export const getProducts = () => ({
 });
 
 // send add product form data to backend
-export const saveProductAdd = (addProduct) => ({
+export const saveProductAdd = (addProduct, history) => ({
     type: SAVE_PRODUCT_ADD,
-    payload: addProduct
+    payload: addProduct,
+    history: history
+});
+
+
+// send edited product form data
+export const saveProductEdit = (product, history) => ({
+    type: SAVE_PRODUCT_EDIT,
+    payload: product,
+    history: history
 });
 
 // send edited product form data
-export const saveProductEdit = (product) => ({
-    type: SAVE_PRODUCT_EDIT,
+export const updateProductInStore = (product) => ({
+    type: UPDATE_PRODUCT_STORE,
     payload: product
 });
+
 
 
 // send request for product deletion

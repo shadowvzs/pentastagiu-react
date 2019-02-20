@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core';
 
 const styles = {
     content: {
-        paddingTop: '50px',
+        paddingTop: '100px',
         textAlign: 'center'
    }
 }

@@ -85,11 +85,24 @@ export const addProductById = ({ dispatch }) => next => action => {
         'POST',
         { body: { product: action.payload } },
         ADD_PRODUCT_STORE,
-        FETCH_PRODUCT_SAVE_EDIT_ERROR
+        FETCH_PRODUCT_SAVE_EDIT_ERROR,
+        action.history
       )
     );
   }
 };
+
+// hide loader after product was saved successfully
+export const processSaveAddProduct = ({dispatch}) => next => action => {
+  next(action);
+
+  if(action.type === ADD_PRODUCT_STORE) {
+    dispatch(hideLoader());
+    if (action.extra) {
+      action.extra.push('/');
+    }
+  }
+}
 
 
 // Save edited product request
@@ -103,7 +116,8 @@ export const saveProductById = ({ dispatch }) => next => action => {
         'PUT',
         { body: action.payload },
         UPDATE_PRODUCT_STORE,
-        FETCH_PRODUCT_SAVE_EDIT_ERROR
+        FETCH_PRODUCT_SAVE_EDIT_ERROR,
+        action.history
       )
     );
   }
@@ -115,6 +129,9 @@ export const processSaveEditProduct = ({dispatch}) => next => action => {
 
   if(action.type === UPDATE_PRODUCT_STORE) {
     dispatch(hideLoader());
+    if (action.extra) {
+      action.extra.push('/');
+    }
   }
 }
 
@@ -123,6 +140,7 @@ export const productsMdl = [
   processProductsCollection,           // process when all products arrived
   processSaveEditProduct,              // update the edited item in collection
   saveProductById,                     // save product request
+  processSaveAddProduct,
   deleteProduct,                       // delete product request
   addProductById,                      // add product to store
 ];

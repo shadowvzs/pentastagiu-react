@@ -10,9 +10,6 @@ const styles = {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
         boxShadow: '10px 10px 10px rgba(0,0,0,0.5)',
         border: '1px outset #ccc',
         borderRadius: '5px',
@@ -34,8 +31,8 @@ function AddCard(props) {
     return (
         <div className={props.classes.cardModal}>
             <CardForm
-                {...props}
-                classes={null}
+                title="New Card"
+                history={props.history}
                 onSave={props._saveProductAdd}
                 onClose={props.onClick}
                 defaultData={defaultData}
@@ -45,8 +42,8 @@ function AddCard(props) {
  
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    _saveProductAdd: (product) => dispatch(saveProductAdd(product)),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    _saveProductAdd: (product) => dispatch(saveProductAdd(product, ownProps.history)),
 });
 
 const StyledComponent = withStyles(styles)(AddCard);

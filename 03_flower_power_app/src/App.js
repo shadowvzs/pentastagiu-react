@@ -3,7 +3,6 @@ import Header from './components/header/header';
 import Content from './components/content/content';
 import EditCard from './components/editCard/editCard';
 import AddCard from './components/addCard/';
-import AddCardButton from './components/addCard/addCardButton';
 import NotFound from './components/errors/notFound';
 import { connect } from "react-redux";
 import { getProducts } from './Redux/Actions/products';
@@ -20,14 +19,22 @@ class App extends PureComponent {
     console.log('app render');
     return (
       <div className="App">
-        <Header />
-        <AddCardButton {...this.props} />
+        <Header/>
         <Switch>
-          <Route exact path="/add-product" component={ props => (<AddCard {...props} />) } />
-          <Route exact path="/product/:productId" component={ props => (<EditCard {...props} />) } />
+          <Route exact path="/add-product" component={ props => (
+            <AddCard history={props.history} />
+            ) } 
+          />
+          <Route exact path="/product/:productId" component={ props => (
+              <EditCard 
+                products={props.products} 
+                history={props.history} 
+                id={props.match.params.productId}
+              />) } 
+          />
           <Route exact path="/" component={ props => (
             <Content
-              {...props}
+              history={props.history}
               products={this.props.products}
             />)}
           />

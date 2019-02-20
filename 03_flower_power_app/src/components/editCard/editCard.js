@@ -10,9 +10,6 @@ const styles = {
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
       boxShadow: '10px 10px 10px rgba(0,0,0,0.5)',
       border: '1px outset #ccc',
       borderRadius: '5px',
@@ -25,14 +22,14 @@ class EditCard extends React.PureComponent {
 
   render() {
     const props = this.props;
-    const id = this.props.match.params.productId;
+    const id = this.props.id;
     const product = props.products.find(e => +e.id === +id);
     if (!product) { return null; } 
     return (
       <div className={props.classes.cardModal}>
         <CardForm
-          {...props}
-          classes={null}
+          title="Edit Card"
+          history={props.history}          
           onSave={props._saveProductEdit}
           defaultData={product}
         />
@@ -47,8 +44,8 @@ const mapStateToProps = (state) => ({
 });
 
 
-const mapDispatchToProps = (dispatch) => ({
-  _saveProductEdit: (product) => dispatch(saveProductEdit(product)),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  _saveProductEdit: (product) => dispatch(saveProductEdit(product, ownProps.history)),
 });
 
 const StyledEditCard = withStyles(styles)(EditCard);
