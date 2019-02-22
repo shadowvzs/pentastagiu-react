@@ -25,7 +25,8 @@ const styles = {
     },
     cardAction: {
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: '15px'
     }
 }
 
@@ -33,28 +34,30 @@ class CardProduct extends PureComponent {
     render() {
         const props = this.props;
         console.log('render Card');
-        const id = this.props.id;
+        const item = props.item;
+        const id = item.id;
         return (
             <Card className={props.classes.contentCard}>
                 <CardHeader
-                    title={props.description}
+                    title={item.description}
                     subheader="September 14, 2016"
                 />                
                 <CardMedia
                     className={props.classes.media}
-                    image={props.photoUrl}
-                    title={props.name}
+                    image={item.photoUrl}
+                    title={item.name}
                 />
             
 
                 <CardContent>
-                    <h5>Price {props.unitPrice} EUR</h5>
+                    <h5>Price {item.unitPrice} EUR</h5>
                 </CardContent>
                 <CardActions className={props.classes.cardAction}>
                     <Button 
                         size="small" 
                         variant="contained" 
                         color="primary"
+                        onClick={props.addCartProduct.bind(null, item)}     // since arrow function, i can't change context but i can add value :)
                     >Add to cart</Button>
 
                     <Button 
@@ -68,7 +71,7 @@ class CardProduct extends PureComponent {
                         size="small" 
                         variant="contained" 
                         color="secondary" 
-                        onClick={() => props.deleteProduct(id)}
+                        onClick={props.deleteProduct.bind(null, id)}
                     >Delete</Button>                    
                 </CardActions>
             </Card>

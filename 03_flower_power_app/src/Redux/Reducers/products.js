@@ -5,21 +5,19 @@ import {
     REMOVE_PRODUCT_STORE
 } from "../Actions/products";
 
-const initialState = {
-    products: []
-}
+const initialState = [];
 
 export function productsReducer(state = initialState, action) {
 
     switch (action.type) {
         case ADD_PRODUCT_STORE:
-            return { ...state, products: [ ...state.products, action.payload ] }
+            return [ ...state, action.payload ];
         case UPDATE_PRODUCT_STORE:
-            return { ...state, products: state.products.map( e => +e.id !== +action.payload.id ? e : action.payload ) }
+            return [...state.map( e => +e.id !== +action.payload.id ? e : action.payload )];
         case REMOVE_PRODUCT_STORE: 
-            return { ...state, products: state.products.filter( e => +e.id !== +action.payload.id)}
+            return [...state.filter( e => +e.id !== +action.payload.id)];
         case UPDATE_PRODUCTS:
-            return {...state, products: action.payload};
+            return [...action.payload];
         default:
             return state;
     }

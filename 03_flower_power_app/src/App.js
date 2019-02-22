@@ -3,6 +3,7 @@ import Header from './components/header/header';
 import Content from './components/content/content';
 import EditCard from './components/editCard/editCard';
 import AddCard from './components/addCard/';
+import Cart from './components/cart/cart';
 import NotFound from './components/errors/notFound';
 import { connect } from "react-redux";
 import { getProducts } from './Redux/Actions/products';
@@ -32,6 +33,9 @@ class App extends PureComponent {
                 id={props.match.params.productId}
               />) } 
           />
+
+          <Route exact path="/cart" component={ props => <Cart history={props.history} /> } />
+
           <Route exact path="/" component={ props => (
             <Content
               history={props.history}
@@ -48,7 +52,7 @@ class App extends PureComponent {
 // put redux store (ui/products) into props
 const mapStateToProps = (state) => ({
   ui: state.ui,
-  products: state.products.products
+  products: state.products
 });
 
 // put redux actions into props

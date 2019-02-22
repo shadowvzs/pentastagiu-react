@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faPlusSquare } from '@fortawesome/fontawesome-free-solid';
-import { withStyles, Avatar } from '@material-ui/core';
+import { faPlusSquare, faShoppingCart } from '@fortawesome/fontawesome-free-solid';
+import { withStyles, IconButton, Badge } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const styles = {
@@ -30,6 +31,10 @@ const styles = {
             opacity: '1'         
         }
     },
+    badge : {
+        top: '-3px',
+        right: '-3px'
+    },
 
     logo: {
         flex: 'auto',
@@ -42,8 +47,10 @@ const styles = {
 };
 
 class Header extends React.PureComponent {
+
     render() {
-        const classes = this.props.classes;
+        const { cart, classes } = this.props;
+        const counter = cart.reduce((total, item) => total+item.quantity, 0);
         console.log('render Header');
         return(
             <header className={classes.header}>
@@ -53,12 +60,26 @@ class Header extends React.PureComponent {
                 <Link to="/add-product" className={classes.cart}>
                     <FontAwesomeIcon 
                         icon={faPlusSquare} 
-                       // className={classes.cart} 
                     />
                 </Link>
-                <FontAwesomeIcon icon={faShoppingCart} className={classes.cart}/>
+                <IconButton aria-label="Cart">
+                <Badge badgeContent={counter} color="primary" className={classes.cart} classes={{ badge: classes.badge }}>
+                    <FontAwesomeIcon 
+                         icon={faShoppingCart} 
+                    />
+                </Badge>
+              </IconButton>               
             </header>
         )
     }
 }
-export default withStyles(styles)(Header);
+
+const mapStateToProps = (state) => ({
+    cart: state.cart
+});
+  
+  
+const StyledHeader = withStyles(styles)(Header);
+  
+export default connect(mapStateToProps)(StyledHeader);
+  

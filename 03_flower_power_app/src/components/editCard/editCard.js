@@ -40,7 +40,7 @@ class EditCard extends React.PureComponent {
 
 // put redux store (ui/products) into props
 const mapStateToProps = (state) => ({
-  products: state.products.products
+  products: state.products
 });
 
 

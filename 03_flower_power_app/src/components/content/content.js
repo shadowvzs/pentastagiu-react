@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import CardProduct from '../cardProduct/cardProduct';
 import { connect } from "react-redux";
 import { deleteProduct } from '../../Redux/Actions/products';
+import { addCartProduct } from '../../Redux/Actions/cart';
 import { withStyles } from '@material-ui/core';
 
 const styles = {
@@ -18,6 +19,11 @@ class Content extends PureComponent {
         this.props._deleteProduct(id);
     }
 
+    // delete product what we pass down with props to card
+    addCartProduct = product => {
+        this.props._addCartProduct(product);
+    }
+
     render() {
         console.log('render content');
 
@@ -28,8 +34,9 @@ class Content extends PureComponent {
                         <CardProduct
                             history={this.props.history}
                             key={item.id}
-                            {...item}
-                            deleteProduct={this.deleteProduct }
+                            item={item}
+                            addCartProduct={this.addCartProduct}
+                            deleteProduct={this.deleteProduct}
                         />
                     )
                 })}
@@ -40,7 +47,8 @@ class Content extends PureComponent {
 
 // put redux actions into props
 const mapDispatchToProps = (dispatch) => ({
-    _deleteProduct: (id) => dispatch(deleteProduct(id))
+    _deleteProduct: (id) => dispatch(deleteProduct(id)),
+    _addCartProduct: (product) => dispatch(addCartProduct(product)),
 });
   
   
